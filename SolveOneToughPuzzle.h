@@ -1,4 +1,4 @@
-#include "puzzle_pieces.h"
+#include "Piece.h"
 #include <utility>
 #include <math.h>
 

@@ -1,4 +1,4 @@
-#include "puzzle_pieces.h"
+#include "Piece.h"
 
 Piece::Piece(int edges[4], int piece_no) 
 {
