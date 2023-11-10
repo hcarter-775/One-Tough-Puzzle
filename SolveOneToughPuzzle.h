@@ -8,7 +8,7 @@ class SolveOneToughPuzzle {
     public:
         
         // initialization function
-        SolveOneToughPuzzle(std::vector<Piece> pieces);
+        SolveOneToughPuzzle(std::vector<Piece> input_pieces);
 
         // Check Edges on Pieces
         int CheckEdgeEdge(Piece pw_edge1, Piece pw_edge2);

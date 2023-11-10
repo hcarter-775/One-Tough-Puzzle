@@ -13,35 +13,33 @@ class Piece {
         void PtrForward();
         void PtrBackward(); 
 
+        // Getters
         int GetPtrIdx();
         int GetPieceNo();
         int GetPieceDir();
         int GetEdgeValue();
+        int GetPartOfWhichStack();
+        bool GetContinueCheck();
         std::queue<int> GetRemainingOptions();
-        int GetPartOfWhichStack()                               { return this->part_of_which_stack; }
-
-        bool GetContinueCheck()                                 { return this->continue_check; }
-
-        void SetPtrIdx(int i) { this->idx_ptr = i; }
+        std::stack<int> GetCheckedOptions();
+        int GetLeftChild();
+        int GetRightChild();
+        int GetLeftParent();
+        int GetRightParent();
+        
+        void SetPtrIdx(int i);
         void SetPieceDir(int dir);
+        void SetPartOfWhichStack(int s);
+        void SetContinueCheck(bool continue_check);
+        void SetCheckedOptions(std::stack<int> checked_options);
         void SetRemainingOptions(std::queue<int> remaining_options);
-        void SetContinueCheck(bool continue_check)              { this->continue_check = continue_check; }
-        void SetPartOfWhichStack(int s)                         { this->part_of_which_stack = s; }
-        void SetCheckedOptions(std::stack<int> checked_options) { this->checked_options = checked_options; }
-        std::stack<int> GetCheckedOptions() { return checked_options; }
-
-
         void SetLeftChild(int left_piece);
         void SetLeftParent(int left_piece);
         void SetRightParent(int right_piece);
         void SetRightChild(int right_piece);
 
-        int GetLeftChild();
-        int GetRightChild();
-        int GetLeftParent();
-        int GetRightParent();
-
         void SetPlaceHolderInfo(bool fully_checked, std::stack<int> checked, std::queue<int> remainder);
+
 
         bool is_in_a_liklihood_stack;
         bool is_on_board;

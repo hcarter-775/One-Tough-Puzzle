@@ -2,12 +2,12 @@
 
 Piece::Piece(int edges[4], int piece_no) 
 {
-    this->piece_no = piece_no;
-    this->dir = 1;         
     for (int i = 0; i < 4; i++) 
     {
         this->edges[i] = edges[i];
     }
+
+    this->piece_no = piece_no;
 
     left_child = -1; 
     right_child = -1;
@@ -18,6 +18,7 @@ Piece::Piece(int edges[4], int piece_no)
     is_in_a_liklihood_stack = true;
     is_on_board = false;
     idx_ptr = 0;
+    dir = 1;
 }
 
 void Piece::PtrPlus() 
@@ -44,26 +45,35 @@ void Piece::PtrBackward()
     else { PtrPlus(); }
 }
 
-// Getters for Piece
-int Piece::GetPtrIdx()        { return idx_ptr; }
-int Piece::GetPieceNo()       { return piece_no; }
-int Piece::GetPieceDir()      { return dir; }
-int Piece::GetEdgeValue()     { return edges[idx_ptr]; }
+
+// getters
+int Piece::GetPtrIdx()                       { return idx_ptr; }
+int Piece::GetPieceNo()                      { return piece_no; }
+int Piece::GetPieceDir()                     { return dir; }
+int Piece::GetEdgeValue()                    { return edges[idx_ptr]; }
+bool Piece::GetContinueCheck()               { return this->continue_check; }
+int Piece::GetPartOfWhichStack()             { return this->part_of_which_stack; }
+std::stack<int> Piece::GetCheckedOptions()   { return checked_options; }
 std::queue<int> Piece::GetRemainingOptions() { return remaining_options; }
 
-// Setters for Piece
-void Piece::SetPieceDir(int dir)              { this->dir = dir; }
+int Piece::GetLeftChild()   { return left_child; }
+int Piece::GetRightChild()  { return right_child; }
+int Piece::GetLeftParent()  { return left_parent; }
+int Piece::GetRightParent() { return right_parent; }
+
+// setters
+void Piece::SetPtrIdx(int i)                                       { this->idx_ptr = i; }
+void Piece::SetPieceDir(int dir)                                   { this->dir = dir; }
+void Piece::SetPartOfWhichStack(int s)                             { this->part_of_which_stack = s; }
+void Piece::SetContinueCheck(bool continue_check)                  { this->continue_check = continue_check; }
+void Piece::SetCheckedOptions(std::stack<int> checked_options)     { this->checked_options = checked_options; }
 void Piece::SetRemainingOptions(std::queue<int> remaining_options) { this->remaining_options = remaining_options; }
 
-void Piece::SetLeftChild(int left_piece) { left_child = left_piece; }
-void Piece::SetLeftParent(int left_piece) { left_parent = left_piece; }
+void Piece::SetLeftChild(int left_piece)    { left_child = left_piece; }
+void Piece::SetLeftParent(int left_piece)   { left_parent = left_piece; }
+void Piece::SetRightChild(int right_piece)  { right_child = right_piece; }
 void Piece::SetRightParent(int right_piece) { right_parent = right_piece; }
-void Piece::SetRightChild(int right_piece) { right_child = right_piece; }
 
-int Piece::GetLeftChild() { return left_child; }
-int Piece::GetRightChild() { return right_child; }
-int Piece::GetLeftParent() { return left_parent; }
-int Piece::GetRightParent() { return right_parent; }
 
 void Piece::SetPlaceHolderInfo(bool fully_checked, std::stack<int> checked, std::queue<int> remainder) 
 {
