@@ -264,7 +264,7 @@ void SolveOneToughPuzzle::ConnectOuterPieces(Piece* child, bool continue_check, 
 
     // pushing to board
     current_board.push(child->GetPieceNo());
-    child->is_on_board = true;
+    child->SetOnBoard(true);
 
     // setting information
     child->SetPlaceHolderInfo(continue_check, currently_checked, remaining);
@@ -316,7 +316,7 @@ void SolveOneToughPuzzle::DisconnectOuterPieces(Piece* child)
         // PushToLikelihoodStack(p_no, s_no);
         currently_checked.push(p_no);
     }
-    pieces[current_board.top()].is_on_board = false;
+    pieces[current_board.top()].SetOnBoard(false);
     current_board.pop();
 
 }
@@ -366,7 +366,7 @@ void SolveOneToughPuzzle::ConnectInnerPieces(Piece* child, std::queue<int> remai
 
     // pushing to board
     current_board.push(c_no);
-    pieces[c_no].is_on_board = true;
+    pieces[c_no].SetOnBoard(true);
 
     // setting information
     child->SetPlaceHolderInfo(true, currently_checked, remaining);
@@ -410,7 +410,7 @@ void SolveOneToughPuzzle::DisconnectInnerPieces(Piece* child)
 
     // popping from board
     currently_checked.push(current_board.top());
-    pieces[current_board.top()].is_on_board = false;
+    pieces[current_board.top()].SetOnBoard(false);
     current_board.pop();
 }
 
@@ -418,7 +418,7 @@ void SolveOneToughPuzzle::DisconnectInnerPieces(Piece* child)
 // Clearing info back onto liklihood stacks
 void SolveOneToughPuzzle::PushToLikelihoodStack(int p_no, int stack_num)
 {
-    pieces[p_no].is_in_a_liklihood_stack = true;
+    pieces[p_no].on_a_liklihood_stack = true;
     if (stack_num == 0)
     {
         likely_corner_pieces.push(p_no);
@@ -444,7 +444,7 @@ void SolveOneToughPuzzle::ClearCurrentlyChecked(int curr_p_no)
         int p_no = pieces[currently_checked.top()].GetPieceNo();
         int s_no = pieces[currently_checked.top()].GetPartOfWhichStack();
 
-        if ((!pieces[p_no].is_in_a_liklihood_stack) && (!pieces[p_no].is_on_board) && (p_no != curr_p_no))
+        if ((!pieces[p_no].on_a_liklihood_stack) && (!pieces[p_no].GetOnBoard()) && (p_no != curr_p_no))
         {
             PushToLikelihoodStack(p_no, s_no);
         }                
@@ -460,7 +460,7 @@ void SolveOneToughPuzzle::ClearRemaining(std::queue<int>* remaining, int curr_p_
         p_no = pieces[remaining->front()].GetPieceNo();
         s_no = pieces[remaining->front()].GetPartOfWhichStack();
 
-        if ((!pieces[p_no].is_in_a_liklihood_stack) && !pieces[p_no].is_on_board && (p_no != curr_p_no))
+        if ((!pieces[p_no].on_a_liklihood_stack) && !pieces[p_no].GetOnBoard() && (p_no != curr_p_no))
         {
             PushToLikelihoodStack(p_no, s_no);
         }
@@ -513,7 +513,7 @@ std::stack<int> SolveOneToughPuzzle::BuildSolution()
     begin_building:
     
     current_board.push(eoq.front()); 
-    pieces[eoq.front()].is_on_board = true;
+    pieces[eoq.front()].SetOnBoard(true);
     eoq.pop();
     pieces[current_board.top()].SetPlaceHolderInfo(false, current_board, eoq);
     pieces[current_board.top()].SetPieceDir(-1);
@@ -761,7 +761,7 @@ std::stack<int> SolveOneToughPuzzle::BuildSolution()
         {
             failed_corner_pieces.push(current_board.top());
             pieces[current_board.top()].SetPartOfWhichStack(3);
-            pieces[current_board.top()].is_on_board = false;
+            pieces[current_board.top()].SetOnBoard(false);
             current_board.pop();
 
             goto begin_building;
@@ -907,19 +907,19 @@ std::queue<int> SolveOneToughPuzzle::SetOptimalQueue_Corner()
     while (!likely_corner_pieces.empty())
     {
         optimal_queue.push(likely_corner_pieces.top());
-        pieces[likely_corner_pieces.top()].is_in_a_liklihood_stack = false;
+        pieces[likely_corner_pieces.top()].on_a_liklihood_stack = false;
         likely_corner_pieces.pop();
     }
     while (!likely_side_pieces.empty())
     {
         optimal_queue.push(likely_side_pieces.top());
-        pieces[likely_side_pieces.top()].is_in_a_liklihood_stack = false;
+        pieces[likely_side_pieces.top()].on_a_liklihood_stack = false;
         likely_side_pieces.pop();
     }
     while (!likely_inner_pieces.empty())
     {
         optimal_queue.push(likely_inner_pieces.top());
-        pieces[likely_inner_pieces.top()].is_in_a_liklihood_stack = false;
+        pieces[likely_inner_pieces.top()].on_a_liklihood_stack = false;
         likely_inner_pieces.pop();
     }
 
@@ -934,25 +934,25 @@ std::queue<int> SolveOneToughPuzzle::SetOptimalQueue_Side()
     while (!likely_side_pieces.empty())
     {
         optimal_queue.push(likely_side_pieces.top());
-        pieces[likely_side_pieces.top()].is_in_a_liklihood_stack = false;
+        pieces[likely_side_pieces.top()].on_a_liklihood_stack = false;
         likely_side_pieces.pop();
     }
     while (!failed_corner_pieces.empty())
     {
         optimal_queue.push(failed_corner_pieces.top());
-        pieces[failed_corner_pieces.top()].is_in_a_liklihood_stack = false;
+        pieces[failed_corner_pieces.top()].on_a_liklihood_stack = false;
         failed_corner_pieces.pop();
     }
     while (!likely_corner_pieces.empty())
     {
         optimal_queue.push(likely_corner_pieces.top());
-        pieces[likely_corner_pieces.top()].is_in_a_liklihood_stack = false;
+        pieces[likely_corner_pieces.top()].on_a_liklihood_stack = false;
         likely_corner_pieces.pop();
     }
     while (!likely_inner_pieces.empty())
     {
         optimal_queue.push(likely_inner_pieces.top());
-        pieces[likely_inner_pieces.top()].is_in_a_liklihood_stack = false;
+        pieces[likely_inner_pieces.top()].on_a_liklihood_stack = false;
         likely_inner_pieces.pop();
     }
 
@@ -968,25 +968,25 @@ std::queue<int> SolveOneToughPuzzle::SetOptimalQueue_Inner()
     while (!likely_inner_pieces.empty())
     {
         optimal_queue.push(likely_inner_pieces.top());
-        pieces[likely_inner_pieces.top()].is_in_a_liklihood_stack = false;
+        pieces[likely_inner_pieces.top()].on_a_liklihood_stack = false;
         likely_inner_pieces.pop();
     }
     while (!likely_side_pieces.empty())
     {
         optimal_queue.push(likely_side_pieces.top());
-        pieces[likely_side_pieces.top()].is_in_a_liklihood_stack = false;
+        pieces[likely_side_pieces.top()].on_a_liklihood_stack = false;
         likely_side_pieces.pop();
     }
     while (!failed_corner_pieces.empty())
     {
         optimal_queue.push(failed_corner_pieces.top());
-        pieces[failed_corner_pieces.top()].is_in_a_liklihood_stack = false;
+        pieces[failed_corner_pieces.top()].on_a_liklihood_stack = false;
         failed_corner_pieces.pop();
     }
     while (!likely_corner_pieces.empty())
     {
         optimal_queue.push(likely_corner_pieces.top());
-        pieces[likely_corner_pieces.top()].is_in_a_liklihood_stack = false;
+        pieces[likely_corner_pieces.top()].on_a_liklihood_stack = false;
         likely_corner_pieces.pop();
     }
 

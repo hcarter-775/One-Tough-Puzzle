@@ -18,6 +18,7 @@ class Piece {
         int GetPieceNo();
         int GetPieceDir();
         int GetEdgeValue();
+        bool GetOnBoard();
         int GetPartOfWhichStack();
         bool GetContinueCheck();
         std::queue<int> GetRemainingOptions();
@@ -27,8 +28,10 @@ class Piece {
         int GetLeftParent();
         int GetRightParent();
         
+        // Setters
         void SetPtrIdx(int i);
         void SetPieceDir(int dir);
+        void SetOnBoard(bool ob);
         void SetPartOfWhichStack(int s);
         void SetContinueCheck(bool continue_check);
         void SetCheckedOptions(std::stack<int> checked_options);
@@ -37,12 +40,10 @@ class Piece {
         void SetLeftParent(int left_piece);
         void SetRightParent(int right_piece);
         void SetRightChild(int right_piece);
-
         void SetPlaceHolderInfo(bool fully_checked, std::stack<int> checked, std::queue<int> remainder);
 
-
-        bool is_in_a_liklihood_stack;
-        bool is_on_board;
+        // will segfault if I add getter/setter for this value
+        bool on_a_liklihood_stack;
 
     private:
         // [0, 1] <- order checked for top pieces. 
@@ -62,4 +63,6 @@ class Piece {
         int piece_no;
         bool continue_check;
         int part_of_which_stack;
+        
+        bool on_board;
 };

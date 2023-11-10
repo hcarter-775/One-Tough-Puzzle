@@ -15,8 +15,8 @@ Piece::Piece(int edges[4], int piece_no)
     right_parent = -1;
 
     continue_check = false;
-    is_in_a_liklihood_stack = true;
-    is_on_board = false;
+    on_a_liklihood_stack = true;
+    on_board = false;
     idx_ptr = 0;
     dir = 1;
 }
@@ -50,6 +50,7 @@ void Piece::PtrBackward()
 int Piece::GetPtrIdx()                       { return idx_ptr; }
 int Piece::GetPieceNo()                      { return piece_no; }
 int Piece::GetPieceDir()                     { return dir; }
+bool Piece::GetOnBoard()                     { return on_board; }
 int Piece::GetEdgeValue()                    { return edges[idx_ptr]; }
 bool Piece::GetContinueCheck()               { return this->continue_check; }
 int Piece::GetPartOfWhichStack()             { return this->part_of_which_stack; }
@@ -63,6 +64,7 @@ int Piece::GetRightParent() { return right_parent; }
 
 // setters
 void Piece::SetPtrIdx(int i)                                       { this->idx_ptr = i; }
+void Piece::SetOnBoard(bool ob)                                    { this->on_board = ob; }
 void Piece::SetPieceDir(int dir)                                   { this->dir = dir; }
 void Piece::SetPartOfWhichStack(int s)                             { this->part_of_which_stack = s; }
 void Piece::SetContinueCheck(bool continue_check)                  { this->continue_check = continue_check; }
