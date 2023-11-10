@@ -1,4 +1,4 @@
-#include "SolveOneToughPuzzle.h"
+#include "solver/SolveOneToughPuzzle.h"
 
 int main()
 { 

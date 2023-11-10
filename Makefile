@@ -1,8 +1,8 @@
 CXX = g++
 CXXFLAGS = -Wall -std=c++17 -g
 
-SRC = main.cpp SolveOneToughPuzzle.cpp Piece.cpp
-OBJ_DIR = o_files
+SRC = main.cpp solver/SolveOneToughPuzzle.cpp solver/Piece.cpp
+OBJ_DIR = .o
 OBJ = $(addprefix $(OBJ_DIR)/,$(notdir $(SRC:.cpp=.o)))
 EXEC = otp_solver
 
