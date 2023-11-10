@@ -1,9 +1,9 @@
 #include "solve_onetoughpuzzle.h"
 
 // Initializer
-SolveOneToughPuzzle::SolveOneToughPuzzle(Piece pieces[4]) 
+SolveOneToughPuzzle::SolveOneToughPuzzle(std::vector<Piece> pieces) 
 {
-    for (int i = 0; i < 9; i++) 
+    for (int i = 0; i < pieces.size(); i++) 
     {
         this->pieces.push_back(pieces[i]);
     }
@@ -237,7 +237,6 @@ void SolveOneToughPuzzle::ConnectOuterPieces(Piece* child, bool continue_check, 
     {
         l_head->SetLeftChild(child->GetPieceNo());
         child->SetRightParent(l_head->GetPieceNo());
-        // std::cout << "connecting: " << child->GetPieceNo() << "\n";
 
         // set l_head, l_head increment, increment l_depth;
         l_head->PtrForward();
@@ -250,7 +249,6 @@ void SolveOneToughPuzzle::ConnectOuterPieces(Piece* child, bool continue_check, 
         
         r_head->SetRightChild(child->GetPieceNo());
         child->SetLeftParent(r_head->GetPieceNo());
-        // std::cout << "connecting: " << child->GetPieceNo() << "\n";
 
         // set dir
         child->SetPieceDir(-1);
@@ -271,8 +269,8 @@ void SolveOneToughPuzzle::ConnectOuterPieces(Piece* child, bool continue_check, 
 
     // setting information
     child->SetPlaceHolderInfo(continue_check, currently_checked, remaining);
-    clear_currently_checked(child->GetPieceNo());
-    clear_remaining(&remaining, child->GetPieceNo());
+    ClearCurrentlyChecked(child->GetPieceNo());
+    ClearRemaining(&remaining, child->GetPieceNo());
 }
 
 void SolveOneToughPuzzle::DisconnectOuterPieces(Piece* child)
@@ -373,8 +371,8 @@ void SolveOneToughPuzzle::ConnectInnerPieces(Piece* child, std::queue<int> remai
 
     // setting information
     child->SetPlaceHolderInfo(true, currently_checked, remaining);
-    clear_currently_checked(c_no);
-    clear_remaining(&remaining, c_no);
+    ClearCurrentlyChecked(c_no);
+    ClearRemaining(&remaining, c_no);
 }
 
 void SolveOneToughPuzzle::DisconnectInnerPieces(Piece* child)
@@ -418,6 +416,58 @@ void SolveOneToughPuzzle::DisconnectInnerPieces(Piece* child)
 }
 
 
+// Clearing info back onto liklihood stacks
+void SolveOneToughPuzzle::PushToLikelihoodStack(int p_no, int stack_num)
+{
+    pieces[p_no].is_in_a_liklihood_stack = true;
+    if (stack_num == 0)
+    {
+        likely_corner_pieces.push(p_no);
+    }
+    else if (stack_num == 1)
+    {
+        likely_side_pieces.push(p_no);
+    }
+    else if (stack_num == 2)
+    {
+        likely_inner_pieces.push(p_no);
+    } 
+    else if (stack_num == 3)
+    {
+        failed_corner_pieces.push(p_no);
+    }
+}
+
+void SolveOneToughPuzzle::ClearCurrentlyChecked(int curr_p_no) 
+{
+    while (!currently_checked.empty())
+    {
+        int p_no = pieces[currently_checked.top()].GetPieceNo();
+        int s_no = pieces[currently_checked.top()].GetPartOfWhichStack();
+
+        if ((!pieces[p_no].is_in_a_liklihood_stack) && (!pieces[p_no].is_on_board) && (p_no != curr_p_no))
+        {
+            PushToLikelihoodStack(p_no, s_no);
+        }                
+        currently_checked.pop();
+    }
+}
+
+void SolveOneToughPuzzle::ClearRemaining(std::queue<int>* remaining, int curr_p_no)
+{
+    int p_no; int s_no;
+    while (!remaining->empty())
+    {
+        p_no = pieces[remaining->front()].GetPieceNo();
+        s_no = pieces[remaining->front()].GetPartOfWhichStack();
+
+        if ((!pieces[p_no].is_in_a_liklihood_stack) && !pieces[p_no].is_on_board && (p_no != curr_p_no))
+        {
+            PushToLikelihoodStack(p_no, s_no);
+        }
+        remaining->pop();
+    }
+}
 
 // setting the e0 position
 void SolveOneToughPuzzle::SetE0Idx(int i)
@@ -473,7 +523,7 @@ std::stack<int> SolveOneToughPuzzle::BuildSolution()
     ld_head = l_head;
     rd_head = r_head;
     int e0_pos = 0;
-    clear_remaining(&eoq, current_board.top());
+    ClearRemaining(&eoq, current_board.top());
 
     // originally a for loop. for loop removed for easier reading (fewer indentations)
     incremented_e0_pos:
@@ -482,9 +532,6 @@ std::stack<int> SolveOneToughPuzzle::BuildSolution()
 
     SetE0Idx(e0_pos);
     bool e0_pos_checks_complete = false;
-
-    std::cout << "\n\n" << e0_pos << "\n\n\n";
-
 
     e0_pos_checks_incomplete:
 
@@ -597,7 +644,7 @@ std::stack<int> SolveOneToughPuzzle::BuildSolution()
                 if (current_board.size() == 1)
                 {
                     e0_pos_checks_complete = true;
-                    clear_currently_checked(-1);
+                    ClearCurrentlyChecked(-1);
                     break;
                 }
                 else
@@ -726,6 +773,71 @@ std::stack<int> SolveOneToughPuzzle::BuildSolution()
     return current_board;
 }
 
+// Prints the solution
+void SolveOneToughPuzzle::PrintSolution(std::stack<int> solution)
+{
+    int board_size = board_side_length * board_side_length;
+    int complete_board[board_size];
+
+    int length_used = board_side_length - 1;
+    int p_no;
+    while (length_used > 0)
+    {
+        // vertical info
+        p_no = length_used;
+        for (int j=length_used;j>=0;j--)
+        {
+            if (length_used != board_side_length-1)
+            {
+                pieces[solution.top()].PtrBackward(); 
+            }
+            else if ((p_no + board_side_length*j) == board_size-1)
+            {
+                pieces[solution.top()].PtrForward(); 
+            }
+            complete_board[p_no + board_side_length*j] = solution.top();
+            solution.pop(); 
+        }
+        
+        // horizontal info
+        p_no = (length_used*board_side_length) + (length_used-1);
+        for (int j=length_used;j>0;j--)
+        {
+            if (length_used != board_side_length-1)
+            {
+                pieces[solution.top()].PtrBackward(); 
+            }
+            pieces[solution.top()].PtrBackward();
+            complete_board[p_no] = solution.top();
+            solution.pop();
+            p_no -= 1;
+        }
+
+        length_used -= 1;
+    }
+
+    // leftmost corner piece
+    pieces[solution.top()].PtrBackward(); 
+    complete_board[0] = solution.top();
+    solution.pop();
+
+    std::cout << "Note: Parenthesized numbers describe the right-pointing edge.\nThis is the solution:\n";
+    int k = 0;
+    for (int i=0;i<board_size;i++)
+    {
+        if (k == board_side_length-1) 
+        {
+            std::cout << complete_board[i] << "(" << pieces[complete_board[i]].GetPtrIdx() << ")\n";
+            k = 0;
+        }
+        else 
+        {
+            std::cout << complete_board[i] << "(" << pieces[complete_board[i]].GetPtrIdx() << ") ";
+            k++;
+        }
+        
+    }
+}
 
 // uses the for loops below to make a queue
 // uses the LocationType f() as well
@@ -885,78 +997,57 @@ std::queue<int> SolveOneToughPuzzle::SetOptimalQueue_Inner()
 
 int main()
 { 
-    Piece pieces[9];
+    std::vector<Piece> pieces;
 
     // 1, 2
     int edges0[4] = {0,0,3,1};
     Piece new_piece0(edges0, 0);
-    pieces[0] = new_piece0;
+    pieces.push_back(new_piece0);
 
     int edges1[4] = {2,1,1,2};
     Piece new_piece1(edges1, 1);
-    pieces[1] = new_piece1;
+    pieces.push_back(new_piece1);
 
     // 3,
 
     int edges2[4] = {3,2,1,1};
     Piece new_piece2(edges2, 2);
-    pieces[2] = new_piece2;
+    pieces.push_back(new_piece2);
 
     // 4,5
 
     int edges3[4] = {3,2,2,3};
     Piece new_piece3(edges3, 3);
-    pieces[3] = new_piece3;
+    pieces.push_back(new_piece3);
 
     int edges4[4] = {1,3,0,3};
     Piece new_piece4(edges4, 4);
-    pieces[4] = new_piece4;
+    pieces.push_back(new_piece4);
 
     // 6,7
  
     int edges5[4] = {1, 3, 2, 1};
     Piece new_piece5(edges5, 5);
-    pieces[5] = new_piece5;
+    pieces.push_back(new_piece5);
 
     int edges6[4] = {0, 2, 0, 3};
     Piece new_piece6(edges6, 6);
-    pieces[6] = new_piece6;
+    pieces.push_back(new_piece6);
 
 
     // 8, 9
 
     int edges7[4] = {3,0,0,1};
     Piece new_piece7(edges7, 7);
-    pieces[7] = new_piece7;
+    pieces.push_back(new_piece7);
 
     int edges8[4] = {0, 2, 3, 2};
     Piece new_piece8(edges8, 8);
-    pieces[8] = new_piece8;
+    pieces.push_back(new_piece8);
     
-    // for (int i=0;i<4;i++)
-    // {
-    //     std::cout << "Enter Edge 0: ";
-    //     std::cin >> edges[0];
-    //     std::cout << "Enter Edge 1: ";
-    //     std::cin >> edges[1];
-    //     std::cout << "Enter Edge 2: ";
-    //     std::cin >> edges[2];
-    //     std::cout << "Enter Edge 3: ";
-    //     std::cin >> edges[3];
-    //     Piece new_piece(edges, i);
-    //     pieces[i] = new_piece;
-    //     std::cout << "New Piece Added.\n\n";
-    // }
-
     SolveOneToughPuzzle solver(pieces);
     std::stack<int> solution = solver.BuildSolution();
-
-    std::cout << "This is the solution: ";
-    while(!solution.empty())
-    {
-        std::cout << solution.top() << " ";
-        solution.pop();
-    }
+    solver.PrintSolution(solution);
 
     return 1;
 }
