@@ -46,8 +46,8 @@ possibilites. This, of course, is where this algorithm *shines*.
        those pieces clockwise by 90 degrees. Now, consider the upward pointing side as the first face and
        index clockwise. 
     d. This should leave you with a pieces.txt file that looks something like this:
-        0 0 3 1
-        2 1 1 2
+        0 0 3 1 \n
+        2 1 1 2 
         3 2 1 1
         3 2 2 3
         1 3 0 3
