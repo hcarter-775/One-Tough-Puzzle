@@ -1,9 +1,9 @@
 # One-Tough-Puzzle
 
-"Over *300,000* wrong ways to assemble the pieces, but only *One* right way!
+## "Over *300,000* wrong ways to assemble the pieces, but only *One* right way!
 This is truly... One Tough Puzzle!"
 
-## Background:
+### Background:
 
 I found this puzzle in my mom's house a couple of weeks ago with a rather 
 daunting title: One Tough Puzzle. The box says it was developed by the Great
@@ -31,7 +31,7 @@ From what I can figure, anything over five by five would be pretty impossible fo
 to do. I haven't done the total calculations, but we're talking int the quadrillions of 
 possibilites. This, of course, is where this algorithm *shines*. 
 
-## How to use:
+### How to use:
 
 1. You can download the whole project into any empty folder. 
 2. From there, you can compile it by typing "make" into your command line from the folder in use.
