@@ -1,7 +1,7 @@
 # One-Tough-Puzzle
 
 ## "Over *300,000* wrong ways to assemble the pieces, but only *One* right way!
-This is truly... One Tough Puzzle!"
+## This is truly... One Tough Puzzle!"
 
 ### Background:
 
