@@ -42,9 +42,9 @@ possibilites. This, of course, is where this algorithm *shines*.
     b. We do this by first converting each face type into a number: spade = 0, club = 1; diamond = 2,
        and hearts = 3. We will write these numbers down onto the .txt file.
     c. Ordering also matters. Orient each piece such that one of its outward facing sides points up
-       and the other one points to the right. In other words, look at the photo linked above and rotate
-       those pieces clockwise by 90 degrees. Now, consider the upward pointing side as the first face and
-       index clockwise. 
+       and the other one points to the right. In other words, look at the photo linked above, rotate
+       any of those pieces clockwise by 90 degrees. Make your pieces look like that. Now, consider the
+       top-facing side as the first face (index 0) and index clockwise.
     d. This should leave you with a pieces.txt file that looks something like this:  
         0 0 3 1  
         2 1 1 2  
