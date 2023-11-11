@@ -1,4 +1,4 @@
-#include "solver/SolveOneToughPuzzle.h"
+#include "SolveOneToughPuzzle.h"
 
 std::vector<Piece> TxtFileToPiecesVector() {
     
