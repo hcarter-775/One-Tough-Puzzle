@@ -2,7 +2,7 @@
 
 ## "Over *300,000* wrong ways to assemble the pieces, but only *One* right way! This is truly... One Tough Puzzle!"
 
-![Alt text](https://camo.githubusercontent.com/39b05d8cdf9c3548d5866610e36c5b1b16e2175578f38acec873c78a689eabbe/68747470733a2f2f7261772e6769746875622e636f6d2f646f756764726f7065722f70757a7a6c652f617474656d70745f322f70757a7a6c652e706e67![image](https://github.com/hcarter-775/One-Tough-Puzzle/assets/137556605/0c524169-473d-4bfd-b7a1-8ea1bf0bf738))
+![Alt text](https://camo.githubusercontent.com/39b05d8cdf9c3548d5866610e36c5b1b16e2175578f38acec873c78a689eabbe/68747470733a2f2f7261772e6769746875622e636f6d2f646f756764726f7065722f70757a7a6c652f617474656d70745f322f70757a7a6c652e706e67!)
 
 ### Background:
 
