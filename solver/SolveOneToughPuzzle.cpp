@@ -830,22 +830,24 @@ void SolveOneToughPuzzle::PrintSolution(std::stack<int> solution)
     complete_board[0] = solution.top();
     solution.pop();
 
-    std::cout << "Note: Parenthesized numbers describe the right-pointing edge.\nThis is the solution:\n";
+    // printing information to a newly created file
+    std::ofstream outputFile("solution.txt");
+    outputFile << "Note: Parenthesized numbers describe the right-pointing edge.\nThis is the solution:\n";
     int k = 0;
     for (int i=0;i<board_size;i++)
     {
         if (k == board_side_length-1) 
         {
-            std::cout << complete_board[i] << "(" << pieces[complete_board[i]].GetPtrIdx() << ")\n";
+            outputFile << complete_board[i] << "(" << pieces[complete_board[i]].GetPtrIdx() << ")\n";
             k = 0;
         }
         else 
         {
-            std::cout << complete_board[i] << "(" << pieces[complete_board[i]].GetPtrIdx() << ") ";
+            outputFile << complete_board[i] << "(" << pieces[complete_board[i]].GetPtrIdx() << ") ";
             k++;
-        }
-        
+        }   
     }
+    outputFile.close();
 }
 
 // uses the for loops below to make a queue

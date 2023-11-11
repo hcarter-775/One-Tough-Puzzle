@@ -1,5 +1,6 @@
 #include "Piece.h"
 #include <iostream>
+#include <fstream>
 
 enum head_in_use { left, right, left_diag, right_diag };
 
