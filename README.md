@@ -2,6 +2,8 @@
 
 ## "Over *300,000* wrong ways to assemble the pieces, but only *One* right way! This is truly... One Tough Puzzle!"
 
+![Alt text](https://www.google.com/imgres?imgurl=https%3A%2F%2Fi.ebayimg.com%2Fimages%2Fg%2FxzMAAOSw-cdkrhjD%2Fs-l1200.webp&tbnid=On8XQ6-HJ-OkWM&vet=12ahUKEwjFt8f-iruCAxWA8ckDHRv6CLUQMygCegUIARC6AQ..i&imgrefurl=https%3A%2F%2Fwww.ebay.com%2Fitm%2F166223498612%3Fchn%3Dps%26mkevt%3D1%26mkcid%3D28&docid=BuWXPErBaOCy-M&w=1033&h=1200&q=one%20tough%20puzzle&hl=en&client=safari&ved=2ahUKEwjFt8f-iruCAxWA8ckDHRv6CLUQMygCegUIARC6AQ![image](https://github.com/hcarter-775/One-Tough-Puzzle/assets/137556605/c7061c3d-e9c0-4f65-b5a2-6ad1378cc649))
+
 ### Background:
 
 I found this puzzle in my mom's house a couple of weeks ago with a rather 
