@@ -1,12 +1,11 @@
 #include <vector>
 #include <queue>
 #include <stack>
-#include <iostream>
 
 class Piece {
     public:
         Piece() {}
-        Piece(int edges[4], int piece_no);
+        Piece(std::vector<int> edges, int piece_no);
 
         void PtrPlus();         
         void PtrMinus(); 

@@ -1,6 +1,6 @@
 #include "Piece.h"
 
-Piece::Piece(int edges[4], int piece_no) 
+Piece::Piece(std::vector<int> edges, int piece_no) 
 {
     for (int i = 0; i < 4; i++) 
     {

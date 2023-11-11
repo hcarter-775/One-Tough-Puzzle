@@ -1,58 +1,49 @@
 #include "solver/SolveOneToughPuzzle.h"
+#include <iostream>
+#include <fstream>
+#include <string>
+
+std::vector<Piece> TxtFileToPiecesVector() {
+    
+    std::vector<Piece> pieces;
+    const std::string file_path = "pieces.txt";
+
+    try {
+        std::ifstream inputFile(file_path);
+
+        if (!inputFile.is_open()) {
+            std::cerr << "Error opening file: " << file_path << std::endl;
+            return pieces;
+        }
+
+        std::string line;
+        std::vector<int> edges;
+        int k = 0;
+        while (std::getline(inputFile, line)) {
+            edges.push_back(line[0] - 48);
+            edges.push_back(line[2] - 48);
+            edges.push_back(line[4] - 48);
+            edges.push_back(line[6] - 48);
+            pieces.push_back(Piece(edges,k));
+            edges.clear();
+            k += 1;
+        }
+
+        inputFile.close();
+    } catch (const std::exception& e) {
+        std::cerr << "Error: " << e.what() << std::endl;
+        return pieces;
+    }
+
+    return pieces;
+}
+
 
 int main()
-{ 
-    std::vector<Piece> pieces;
-
-    // 1, 2
-    int edges0[4] = {0,0,3,1};
-    Piece new_piece0(edges0, 0);
-    pieces.push_back(new_piece0);
-
-    int edges1[4] = {2,1,1,2};
-    Piece new_piece1(edges1, 1);
-    pieces.push_back(new_piece1);
-
-    // 3,
-
-    int edges2[4] = {3,2,1,1};
-    Piece new_piece2(edges2, 2);
-    pieces.push_back(new_piece2);
-
-    // 4,5
-
-    int edges3[4] = {3,2,2,3};
-    Piece new_piece3(edges3, 3);
-    pieces.push_back(new_piece3);
-
-    int edges4[4] = {1,3,0,3};
-    Piece new_piece4(edges4, 4);
-    pieces.push_back(new_piece4);
-
-    // 6,7
- 
-    int edges5[4] = {1, 3, 2, 1};
-    Piece new_piece5(edges5, 5);
-    pieces.push_back(new_piece5);
-
-    int edges6[4] = {0, 2, 0, 3};
-    Piece new_piece6(edges6, 6);
-    pieces.push_back(new_piece6);
-
-
-    // 8, 9
-
-    int edges7[4] = {3,0,0,1};
-    Piece new_piece7(edges7, 7);
-    pieces.push_back(new_piece7);
-
-    int edges8[4] = {0, 2, 3, 2};
-    Piece new_piece8(edges8, 8);
-    pieces.push_back(new_piece8);
-    
+{
+    std::vector<Piece> pieces = TxtFileToPiecesVector();
     SolveOneToughPuzzle solver(pieces);
     std::stack<int> solution = solver.BuildSolution();
     solver.PrintSolution(solution);
-
     return 1;
 }

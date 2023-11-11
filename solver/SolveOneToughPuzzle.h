@@ -1,6 +1,5 @@
 #include "Piece.h"
-#include <utility>
-#include <math.h>
+#include <iostream>
 
 enum head_in_use { left, right, left_diag, right_diag };
 
@@ -49,7 +48,7 @@ class SolveOneToughPuzzle {
 
         // Prints and returns the ordered solution
         void PrintSolution(std::stack<int> solution);
-        
+     
     private:
         std::vector<Piece> pieces;
         std::stack<int> currently_checked;

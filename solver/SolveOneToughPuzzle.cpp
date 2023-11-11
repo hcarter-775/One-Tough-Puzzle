@@ -1,5 +1,15 @@
 #include "SolveOneToughPuzzle.h"
 
+float sqrt(float n) {
+    
+    float x = n / 2.0;
+    for (int i = 0; i < 5; ++i) 
+    {
+        x = 0.5 * (x + (n / x));
+    }
+    return x;
+}
+
 // Initializer
 SolveOneToughPuzzle::SolveOneToughPuzzle(std::vector<Piece> pieces) 
 {
