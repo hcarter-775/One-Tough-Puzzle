@@ -45,21 +45,21 @@ possibilites. This, of course, is where this algorithm *shines*.
        and the other one points to the right. In other words, look at the photo linked above and rotate
        those pieces clockwise by 90 degrees. Now, consider the upward pointing side as the first face and
        index clockwise. 
-    d. This should leave you with a pieces.txt file that looks something like this:
-        0 0 3 1 \n
-        2 1 1 2 
-        3 2 1 1
-        3 2 2 3
-        1 3 0 3
-        1 3 2 1
-        0 2 0 3
-        3 0 0 1
-        0 2 3 2
+    d. This should leave you with a pieces.txt file that looks something like this:  
+        0 0 3 1  
+        2 1 1 2  
+        3 2 1 1  
+        3 2 2 3  
+        1 3 0 3  
+        1 3 2 1  
+        0 2 0 3  
+        3 0 0 1  
+        0 2 3 2  
 5. Last, run the algorithm by typing ./otp_solver in the command line. This will output a solution.txt
-   file into your folder that contains the answer. It should look something like this:
-    Note: Parenthesized numbers describe the right-pointing face index.
-    This is the solution:
-    8(1) 5(0) 2(0)
-    7(1) 4(0) 1(0)
-    6(1) 3(0) 0(0)
+   file into your folder that contains the answer. It should look something like this:  
+    Note: Parenthesized numbers describe the right-pointing face index.  
+    This is the solution:  
+    8(1) 5(0) 2(0)  
+    7(1) 4(0) 1(0)  
+    6(1) 3(0) 0(0)  
 6. And that's it! To clear the compiled code and .o files, type "make clean". 
