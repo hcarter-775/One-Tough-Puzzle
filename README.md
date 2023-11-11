@@ -42,8 +42,9 @@ possibilites. This, of course, is where this algorithm *shines*.
     b. We do this by first converting each face type into a number: spade = 0, club = 1; diamond = 2,
        and hearts = 3. We will write these numbers down onto the .txt file.
     c. Ordering also matters. Orient each piece such that one of its outward facing sides points up
-       and the other one points to the right. Consider the upward facing side as the first face and
-       move clockwise. 
+       and the other one points to the right. In other words, look at the photo linked above and rotate
+       those pieces clockwise by 90 degrees. Now, consider the upward pointing side as the first face and
+       index clockwise. 
     d. This should leave you with a pieces.txt file that looks something like this:
         0 0 3 1
         2 1 1 2
@@ -54,11 +55,11 @@ possibilites. This, of course, is where this algorithm *shines*.
         0 2 0 3
         3 0 0 1
         0 2 3 2
-4. Last, run the algorithm by typing ./otp_solver in the command line. This will output a solution.txt
+5. Last, run the algorithm by typing ./otp_solver in the command line. This will output a solution.txt
    file into your folder that contains the answer. It should look something like this:
     Note: Parenthesized numbers describe the right-pointing face index.
     This is the solution:
     8(1) 5(0) 2(0)
     7(1) 4(0) 1(0)
     6(1) 3(0) 0(0)
-5. And that's it! To clear the compiled code and .o files, type "make clean". 
+6. And that's it! To clear the compiled code and .o files, type "make clean". 
